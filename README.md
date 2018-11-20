@@ -28,3 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 build prod
 ng build --prod --baseHref="/wordpress/calc/"
+npm install chart.js --save
+npm install ng2-charts --save
