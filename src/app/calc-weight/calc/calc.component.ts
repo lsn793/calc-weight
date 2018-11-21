@@ -9,21 +9,25 @@ import { Chart } from 'chart.js';
 export class CalcComponent implements OnInit { 
   chart:Chart;
   height:number; //label
+  years:number;
   value1:number;
   value2:number;
+  value3:number;
   init_height=175;
-  init_weight=60;
+  init_years=25;
 
   constructor() { }
 
   ngOnInit() {
   	this.height = this.init_height;
+  	this.years  = this.init_years;
   	this.formula1();
     this.formula2();
+    this.formula3();
   	this.chart = new Chart('canvas', {
       type: 'horizontalBar',
       data: {
-      	labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая", "Green", "Purple", "Orange"],
       	datasets: [{
             data: [this.value1, this.value2, this.value1, this.value2, this.value1, this.value2],
             backgroundColor: [
@@ -50,7 +54,7 @@ export class CalcComponent implements OnInit {
             xAxes: [{
                 ticks: {
                     suggestedMin: 50,
-                    suggestedMax: 100
+                    suggestedMax: 150
                 }
             }]
         },
@@ -66,21 +70,52 @@ export class CalcComponent implements OnInit {
       this.height = h;
       this.formula1();
       this.formula2();
+      this.formula3();
       this.updateChart();
-      console.log(h);     
+  }
+
+  changeYears(years) {
+      this.years = years;
+      this.formula1();
+      this.formula2();
+      this.formula3();
+      this.updateChart();
   }
 
   formula1() {
-  	this.value1 = this.height/2;
+  	this.value1 = (+this.height * 3.0 - 450.0 + +this.years) * 0.25 + 40.5;
   }
 
   formula2() {
-  	this.value2 = (this.height/2)-10;
+  	if (this.height<165)
+  	{
+  		this.value2 = +this.height - 100;
+  	}
+  	else if(this.height<175 && this.height>=165)
+  	{
+  	 	this.value2 = +this.height - 105;
+  	}
+  	else {
+  		this.value2 = +this.height - 105;
+  	}
+  }
+  formula3() {
+  	let x = 0;
+  	x = (+this.years-30)/10;
+  	if (x < 0)
+  		x = 0;
+
+  	x = Math.floor(x));
+  	if (x > 3)
+  		x = 3;
+
+  	this.value3 = this.value2 + (this.value2 * 3*x / 100);
+
   }
 
   updateChart() {
     this.chart.data.datasets.forEach((dataset) => {
-        dataset.data = new Array(this.value1, this.value2, this.value1, this.value2, this.value1, this.value2);
+        dataset.data = new Array(this.value1, this.value2, this.value3, this.value2, this.value1, this.value2);
     });
     this.chart.update();
   }
