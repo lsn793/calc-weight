@@ -1,20 +1,17 @@
-<div>
-	<input type="range" #height min="100" max="200" value={{init_height}} list="heightmarks" (input)="changeHeight(height.value)">
-	<label for="height">height ({{ height.value }})</label>
-</div>
-<div>
-	<input type="range" name="age" min="20" max="100" value="35">
-</div>
-<datalist id="heightmarks">
-  <option value="100" label="100">
-  <option value="120">
-  <option value="140">
-  <option value="160">
-  <option value="180">
-  <option value="200" label="200">
-</datalist>
+<div class="container">
+	<div class="controls">
+		<div class="control">
+			<label>Рост: {{ height.value }} см</label>
+			<input type="range" #height min="130" max="230" value={{init_height}} (input)="changeHeight(height.value)">
+		</div>
+		<div class="control">
+			<label>Вес: {{ weight.value }} кг</label>
+			<input type="range" #weight name="age" min="30" max="230" value={{init_weight}} (input)="changeWeight(weight.value)">
+		</div>
+	</div>
 
-<br>
-<div [hidden]="!chart">
-  <canvas id="canvas" #canvas>{{ chart }}</canvas>
+	<br>
+	<div [hidden]="!chart">
+	  <canvas id="canvas" #canvas>{{ chart }}</canvas>
+	</div>
 </div>

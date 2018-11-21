@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit  {
-  title = 'вес считай тут свой';
   calc_name:string;
 
   constructor(public router: Router){}

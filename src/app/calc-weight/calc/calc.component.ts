@@ -11,7 +11,9 @@ export class CalcComponent implements OnInit {
   height:number; //label
   value1:number;
   value2:number;
-  init_height=180;
+  init_height=175;
+  init_weight=60;
+
   constructor() { }
 
   ngOnInit() {
