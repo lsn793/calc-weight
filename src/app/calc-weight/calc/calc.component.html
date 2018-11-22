@@ -8,10 +8,20 @@
 			<label>Возраст: {{ years.value }} лет</label>
 			<input type="range" #years min="18" max="100" value={{init_years}} (input)="changeYears(years.value)">
 		</div>
+		<div style="vertical-align: middle;">
+			<label class="container_radio ">Муж
+			  <input type="radio" checked="checked" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+			<label class="container_radio">Жен
+			  <input type="radio" name="radio">
+			  <span class="checkmark"></span>
+			</label>
+		</div>
 	</div>
 
 	<br>
-	<div [hidden]="!chart">
+	<div [hidden]="!chart" class="fixed-height-chart">
 	  <canvas id="canvas" #canvas>{{ chart }}</canvas>
 	</div>
 </div>

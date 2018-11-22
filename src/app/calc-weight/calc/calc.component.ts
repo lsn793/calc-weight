@@ -27,35 +27,41 @@ export class CalcComponent implements OnInit {
   	this.chart = new Chart('canvas', {
       type: 'horizontalBar',
       data: {
-      	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая", "Green", "Purple", "Orange"],
+      	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая"],
       	datasets: [{
-            data: [this.value1, this.value2, this.value1, this.value2, this.value1, this.value2],
+            data: [this.value1, this.value2, this.value1],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
+               /* 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 159, 64, 0.2)'*/
             ],
             borderColor: [
                 'rgba(255,99,132,1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
+                /*'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(255, 159, 64, 1)'*/
             ],
             borderWidth: 1
         }]
       },
       options: {
+      	aspectRatio: 3,
 	    scales: {
             xAxes: [{
                 ticks: {
-                    suggestedMin: 50,
-                    suggestedMax: 150
+                    suggestedMin: 25,
+                    suggestedMax: 140
                 }
+            }],
+            yAxes:[{
+            	ticks: {mirror: true},
+            	barPercentage : 1
+
             }]
         },
         legend: {
@@ -105,7 +111,7 @@ export class CalcComponent implements OnInit {
   	if (x < 0)
   		x = 0;
 
-  	x = Math.floor(x));
+  	x = Math.floor(x);
   	if (x > 3)
   		x = 3;
 
