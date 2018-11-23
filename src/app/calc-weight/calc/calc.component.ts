@@ -9,27 +9,26 @@ import { Chart } from 'chart.js';
 export class CalcComponent implements OnInit { 
   chart:Chart;
   height:number; //label
-  years:number;
+  years:number;//label
   value1:number;
   value2:number;
   value3:number;
   init_height=175;
   init_years=25;
+  gender:string = "male";
 
   constructor() { }
 
   ngOnInit() {
   	this.height = this.init_height;
   	this.years  = this.init_years;
-  	this.formula1();
-    this.formula2();
-    this.formula3();
+  	this.recalculateFormulas();
   	this.chart = new Chart('canvas', {
       type: 'horizontalBar',
       data: {
       	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая"],
       	datasets: [{
-            data: [this.value1, this.value2, this.value1],
+            data: [this.value1, this.value2, this.value3],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -73,23 +72,41 @@ export class CalcComponent implements OnInit {
   }
 
   changeHeight(h) {
-      this.height = h;
-      this.formula1();
-      this.formula2();
-      this.formula3();
-      this.updateChart();
+    this.height = h;
+    this.recalculateFormulas();
+    this.updateChart();
   }
 
   changeYears(years) {
-      this.years = years;
-      this.formula1();
-      this.formula2();
-      this.formula3();
-      this.updateChart();
+    this.years = years;
+	  this.recalculateFormulas();
+    this.updateChart();
+  }
+
+  changeGender(value) {
+    this.gender = value;
+    this.recalculateFormulas();
+    this.updateChart();
+  }
+
+  recalculateFormulas() {
+	  this.formula1();
+    this.formula2();
+    this.formula3();
   }
 
   formula1() {
-  	this.value1 = (+this.height * 3.0 - 450.0 + +this.years) * 0.25 + 40.5;
+  	switch(this.gender) {
+  		case 'male': 
+  			this.value1 = (+this.height * 3.0 - 450.0 + +this.years) * 0.25 + 40.5;
+  			break;
+  		case 'female': 
+  			this.value1 = (+this.height * 3.0 - 450.0 + +this.years) * 0.225 + 45.0;	
+  			break;
+  		default:
+			this.value1 = (+this.height * 3.0 - 450.0 + +this.years) * 0.25 + 40.5;
+  	}
+  	
   }
 
   formula2() {
@@ -121,7 +138,7 @@ export class CalcComponent implements OnInit {
 
   updateChart() {
     this.chart.data.datasets.forEach((dataset) => {
-        dataset.data = new Array(this.value1, this.value2, this.value3, this.value2, this.value1, this.value2);
+        dataset.data = new Array(this.value1, this.value2, this.value3);
     });
     this.chart.update();
   }

@@ -1,20 +1,20 @@
 <div class="container">
 	<div class="controls">
 		<div class="control">
-			<label>Рост: {{ height.value }} см</label>
-			<input type="range" #height min="130" max="230" value={{init_height}} (input)="changeHeight(height.value)">
+			<label>Рост: {{ h.value }} см</label>
+			<input type="range" #h min="130" max="230" value=175 (input)="changeHeight(h.value)">
 		</div>
 		<div class="control">
 			<label>Возраст: {{ years.value }} лет</label>
-			<input type="range" #years min="18" max="100" value={{init_years}} (input)="changeYears(years.value)">
+			<input type="range" #years min="18" max="100" value=25 (input)="changeYears(years.value)">
 		</div>
-		<div style="vertical-align: middle;">
+		<div>
 			<label class="container_radio ">Муж
-			  <input type="radio" checked="checked" name="radio">
+			  <input type="radio" #male checked="checked" name="radio" value="male" (change)="changeGender(male.value)">
 			  <span class="checkmark"></span>
 			</label>
 			<label class="container_radio">Жен
-			  <input type="radio" name="radio">
+			  <input type="radio" #female name="radio" value="female" (change)="changeGender(female.value)">
 			  <span class="checkmark"></span>
 			</label>
 		</div>

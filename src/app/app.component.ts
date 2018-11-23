@@ -12,11 +12,11 @@ export class AppComponent implements OnInit  {
   constructor(public router: Router){}
 
   ngOnInit() {
-  	// let path =  window.location.href ;
-  	// let search = "?calc=";
-   //  let found = path.lastIndexOf(search);
-   //  this.calc_name = path.slice(found + search.length);
-  	// this.router.navigate([this.calc_name]);
+    /*let path =  window.location.href ;
+    let search = "?calc=";
+    let found = path.lastIndexOf(search);
+    this.calc_name = path.slice(found + search.length);
+    this.router.navigate([this.calc_name]);*/
   	this.router.navigate(["calc-weight"]);
   }
 }
