@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-calc',
@@ -28,7 +29,14 @@ export class CalcComponent implements OnInit {
       data: {
       	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая"],
       	datasets: [{
-            data: [this.value1, this.value2, this.value3],
+            data: [this.value1, this.value2, this.value3].map(Math.round),
+            datalabels: {
+              align : 'right',
+              anchor: 'end',
+              formatter: function(value) {
+                  return Math.round(value) + ' кг';
+              }
+            },
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -50,24 +58,26 @@ export class CalcComponent implements OnInit {
       },
       options: {
       	aspectRatio: 3,
-	    scales: {
+	      scales: {
             xAxes: [{
                 ticks: {
-                    suggestedMin: 25,
+                    suggestedMin: 30,
                     suggestedMax: 140
-                }
+                },
             }],
             yAxes:[{
-            	ticks: {mirror: true},
-            	barPercentage : 1
+/*            	ticks: {mirror: true},*/
+               	barPercentage : 0.8
 
             }]
         },
         legend: {
         	display: false
+	      },
+	      tooltips: {
+          enabled: false
+        }
 	    }
-	    
-	  }
 	});
   }
 
@@ -138,7 +148,8 @@ export class CalcComponent implements OnInit {
 
   updateChart() {
     this.chart.data.datasets.forEach((dataset) => {
-        dataset.data = new Array(this.value1, this.value2, this.value3);
+        let values = [this.value1, this.value2, this.value3];
+        dataset.data = [this.value1, this.value2, this.value3];//values.map(Math.round);
     });
     this.chart.update();
   }

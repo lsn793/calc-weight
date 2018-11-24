@@ -2,11 +2,11 @@
 	<div class="controls">
 		<div class="control">
 			<label>Рост: {{ h.value }} см</label>
-			<input type="range" #h min="130" max="230" value=175 (input)="changeHeight(h.value)">
+			<input type="range" #h min="130" max="210" value=175 (input)="changeHeight(h.value)">
 		</div>
 		<div class="control">
 			<label>Возраст: {{ years.value }} лет</label>
-			<input type="range" #years min="18" max="100" value=25 (input)="changeYears(years.value)">
+			<input type="range" #years min="18" max="80" value=25 (input)="changeYears(years.value)">
 		</div>
 		<div>
 			<label class="container_radio ">Муж
@@ -21,7 +21,7 @@
 	</div>
 
 	<br>
-	<div [hidden]="!chart" class="fixed-height-chart">
+	<div [hidden]="!chart">
 	  <canvas id="canvas" #canvas>{{ chart }}</canvas>
 	</div>
 </div>
