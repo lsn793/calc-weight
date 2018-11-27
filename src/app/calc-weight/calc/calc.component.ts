@@ -14,6 +14,9 @@ export class CalcComponent implements OnInit {
   value1:number;
   value2:number;
   value3:number;
+  value4:number;
+  value5:number;
+  value6:number;
   init_height=175;
   init_years=25;
   gender:string = "male";
@@ -27,9 +30,9 @@ export class CalcComponent implements OnInit {
   	this.chart = new Chart('canvas', {
       type: 'horizontalBar',
       data: {
-      	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая"],
+      	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая", "Индекс Татоня", "Индекс Ноордена", "Индекс Брейтмана"],
       	datasets: [{
-            data: [this.value1, this.value2, this.value3].map(Math.round),
+            data: [this.value1, this.value2, this.value3, this.value4, this.value5, this.value6].map(Math.round),
             datalabels: {
               align : 'right',
               anchor: 'end',
@@ -41,17 +44,17 @@ export class CalcComponent implements OnInit {
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
-               /* 'rgba(75, 192, 192, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'*/
+                'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
                 'rgba(255,99,132,1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
-                /*'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'*/
+                'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
         }]
@@ -66,7 +69,11 @@ export class CalcComponent implements OnInit {
                 },
             }],
             yAxes:[{
-/*            	ticks: {mirror: true},*/
+              	ticks: {
+                  fontFamily: "Arial",
+                  fontSize: 12
+                  /*mirror: true*/
+                },
                	barPercentage : 0.8
 
             }]
@@ -103,6 +110,9 @@ export class CalcComponent implements OnInit {
 	  this.formula1();
     this.formula2();
     this.formula3();
+    this.formula4();
+    this.formula5();
+    this.formula6();
   }
 
   formula1() {
@@ -146,10 +156,24 @@ export class CalcComponent implements OnInit {
 
   }
 
+  formula4() {
+    //рост − (100 + (рост − 100) / 20)
+    this.value4 = +this.height - (100 + (+this.height - 100)/20);
+  }
+
+  formula5() {
+    //рост [см] • 420/1000.
+    this.value5 = +this.height * 420/1000;
+  }
+
+  formula6() {
+    //рост [см] • 0,7 — 50 кг
+    this.value6 = +this.height * 0.7 - 50;
+  }
+  
   updateChart() {
     this.chart.data.datasets.forEach((dataset) => {
-        let values = [this.value1, this.value2, this.value3];
-        dataset.data = [this.value1, this.value2, this.value3];//values.map(Math.round);
+        dataset.data = [this.value1, this.value2, this.value3, this.value4, this.value5,this.value6];
     });
     this.chart.update();
   }
