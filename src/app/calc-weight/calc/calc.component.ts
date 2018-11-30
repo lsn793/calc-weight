@@ -27,6 +27,7 @@ export class CalcComponent implements OnInit {
   	this.height = this.init_height;
   	this.years  = this.init_years;
   	this.recalculateFormulas();
+
   	this.chart = new Chart('canvas', {
       type: 'horizontalBar',
       data: {
@@ -60,7 +61,28 @@ export class CalcComponent implements OnInit {
         }]
       },
       options: {
-      	aspectRatio: 3,
+        animation: {
+          duration: 750,
+          onProgress: function() {
+            var chartInstance = this.chart;
+            var ctx = chartInstance.ctx;
+
+            ctx.font = Chart.helpers.fontString(14, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+
+            this.data.datasets.forEach(function(dataset, i) {
+              var meta = chartInstance.controller.getDatasetMeta(i);
+              meta.data.forEach(function(bar, index) {
+
+                var label = bar._model.label;
+                var xOffset = 14;
+                var yOffset = bar._model.y - 16;
+                ctx.fillText(label, xOffset, yOffset);
+              });
+            });
+          }
+        },
+        maintainAspectRatio: false,
+      	aspectRatio: 0.7,
 	      scales: {
             xAxes: [{
                 ticks: {
@@ -70,11 +92,12 @@ export class CalcComponent implements OnInit {
             }],
             yAxes:[{
               	ticks: {
-                  fontFamily: "Arial",
-                  fontSize: 12
+                  display: false,
+                  /*fontFamily: "Arial",
+                  fontSize: 12*/
                   /*mirror: true*/
                 },
-               	barPercentage : 0.8
+               	barPercentage : 0.4
 
             }]
         },
@@ -83,6 +106,13 @@ export class CalcComponent implements OnInit {
 	      },
 	      tooltips: {
           enabled: false
+        },
+        plugins: {
+          datalabels: {
+            font: {
+              size: "14"
+            }
+          }
         }
 	    }
 	});
