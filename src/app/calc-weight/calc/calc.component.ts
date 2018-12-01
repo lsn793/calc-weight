@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-datalabels';
+import 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-calc',
@@ -17,6 +18,7 @@ export class CalcComponent implements OnInit {
   value4:number;
   value5:number;
   value6:number;
+  val_average:number = 0;
   init_height=175;
   init_years=25;
   gender:string = "male";
@@ -113,9 +115,26 @@ export class CalcComponent implements OnInit {
               size: "14"
             }
           }
+        },
+        annotation: { //plugin to draw vertical line https://github.com/chartjs/chartjs-plugin-annotation
+          annotations: [{
+            id: 'a-line-1', // optional
+            type: 'line',
+            mode: 'vertical',
+            scaleID: 'x-axis-0',
+            borderColor: 'hsl(145, 100%, 36%)',
+            borderWidth: 1,
+            borderDashOffset: 5,
+            label: {
+              position: "center",
+              enabled: true,
+              yAdjust: -7,
+            }
+          }]
         }
 	    }
-	});
+	  });
+    this.updateChart();
   }
 
   changeHeight(h) {
@@ -203,7 +222,14 @@ export class CalcComponent implements OnInit {
   
   updateChart() {
     this.chart.data.datasets.forEach((dataset) => {
-        dataset.data = [this.value1, this.value2, this.value3, this.value4, this.value5,this.value6];
+        const array = [this.value1, this.value2, this.value3, this.value4, this.value5,this.value6];
+        dataset.data = array;
+        
+        //calculate Average
+        const average = (accumulator, currentValue) => (accumulator + currentValue);
+        this.val_average = array.reduce(average)/ array.length ;
+        this.chart.annotation.elements['a-line-1'].options.value = this.val_average;
+        this.chart.annotation.elements['a-line-1'].options.label.content = "среднеее  " + Math.floor(this.val_average) + " кг";
     });
     this.chart.update();
   }
