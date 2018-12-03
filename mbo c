@@ -1,0 +1,57 @@
+warning: LF will be replaced by CRLF in src/app/calc-weight/calc/calc.component.ts.
+The file will have its original line endings in your working directory
+diff --git a/src/app/calc-weight/calc/calc.component.ts b/src/app/calc-weight/calc/calc.component.ts
+index 94542cb..c84d4c2 100644
+--- a/src/app/calc-weight/calc/calc.component.ts
++++ b/src/app/calc-weight/calc/calc.component.ts
+@@ -22,6 +22,8 @@ export class CalcComponent implements OnInit {
+   init_height=175;
+   init_years=25;
+   gender:string = "male";
++  button_text:string = "показать в фунтах"
++  kg=true;
+ 
+   constructor() { }
+ 
+@@ -88,7 +90,7 @@ export class CalcComponent implements OnInit {
+ 	      scales: {
+             xAxes: [{
+                 ticks: {
+-                    suggestedMin: 30,
++                    suggestedMin: 20,
+                     suggestedMax: 140
+                 },
+             }],
+@@ -222,15 +224,30 @@ export class CalcComponent implements OnInit {
+   
+   updateChart() {
+     this.chart.data.datasets.forEach((dataset) => {
+-        const array = [this.value1, this.value2, this.value3, this.value4, this.value5,this.value6];
++        var array = [this.value1, this.value2, this.value3, this.value4, this.value5,this.value6];
++        if (!this.kg) {
++          array = array.map(function(num){return num * 2.20462;});
++        }
+         dataset.data = array;
+         
+         //calculate Average
+         const average = (accumulator, currentValue) => (accumulator + currentValue);
+         this.val_average = array.reduce(average)/ array.length ;
+         this.chart.annotation.elements['a-line-1'].options.value = this.val_average;
+-        this.chart.annotation.elements['a-line-1'].options.label.content = "среднеее  " + Math.floor(this.val_average) + " кг";
++        this.chart.annotation.elements['a-line-1'].options.label.content = "среднеее: " + Math.floor(this.val_average) + " кг";
+     });
+     this.chart.update();
+   }
++
++  convert() {
++    
++    this.kg = !this.kg;
++    if (this.kg) {
++      this.button_text = "показать в фунтах";
++    }
++    else {
++      this.button_text = "показать в кг";
++    }
++    this.updateChart();
++  }
+ }
