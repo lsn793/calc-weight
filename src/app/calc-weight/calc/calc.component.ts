@@ -33,6 +33,7 @@ export class CalcComponent implements OnInit {
       data: {
       	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая", "Индекс Татоня", "Индекс Ноордена", "Индекс Брейтмана"],
       	datasets: [{
+            yAxisID: 'left-y-axis',
             data: [this.value1, this.value2, this.value3, this.value4, this.value5, this.value6].map(Math.round),
             datalabels: {
               align : 'right',
@@ -58,7 +59,24 @@ export class CalcComponent implements OnInit {
                 'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
-        }]
+        }, {
+          yAxisID: 'right-y-axis',
+          label: 'Line Dataset',
+          data: [{
+              x: 85,
+              y: 20
+          }, {
+              x: 85,
+              y: 10
+          }],
+          datalabels: {
+            align : 'right',
+            anchor: 'end',
+            display: false,
+          },
+          type: 'line'
+          }
+        ]
       },
       options: {
         animation: {
@@ -91,6 +109,8 @@ export class CalcComponent implements OnInit {
                 },
             }],
             yAxes:[{
+                id: 'left-y-axis',
+                position: 'left',
               	ticks: {
                   display: false,
                   /*fontFamily: "Arial",
@@ -99,6 +119,10 @@ export class CalcComponent implements OnInit {
                 },
                	barPercentage : 0.4
 
+            }, {
+                id: 'right-y-axis',
+                type: 'linear',
+                position: 'right'
             }]
         },
         legend: {
