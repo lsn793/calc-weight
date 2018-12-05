@@ -23,11 +23,14 @@ export class CalcComponent implements OnInit {
   init_years=25;
   gender:string = "male";
   button_text:string = "показать в фунтах"
-  kg=true;
+  kg = true;
+  show_average = false;   
+  line:any;
 
   constructor() { }
 
   ngOnInit() {
+    this.addVerticalLine();
   	this.height = this.init_height;
   	this.years  = this.init_years;
   	this.recalculateFormulas();
@@ -35,7 +38,7 @@ export class CalcComponent implements OnInit {
   	this.chart = new Chart('canvas', {
       type: 'horizontalBar',
       data: {
-      	labels: ["Универсальная формула", "Формула Брока", "Формула Брока продвинутая", "Индекс Татоня", "Индекс Ноордена", "Индекс Брейтмана"],
+      	labels: ["Универсальная формула", "Формула Брока", "Формула Брока расширенная", "Индекс Татоня", "Индекс Ноордена", "Индекс Брейтмана"],
       	datasets: [{
             data: [this.value1, this.value2, this.value3, this.value4, this.value5, this.value6].map(Math.round),
             datalabels: {
@@ -67,7 +70,7 @@ export class CalcComponent implements OnInit {
       options: {
         animation: {
           duration: 750,
-          onProgress: function() {
+          onProgress: function() { //draw name of bars
             var chartInstance = this.chart;
             var ctx = chartInstance.ctx;
 
@@ -91,7 +94,7 @@ export class CalcComponent implements OnInit {
             xAxes: [{
                 ticks: {
                     suggestedMin: 20,
-                    suggestedMax: 140
+                    suggestedMax: 140,
                 },
             }],
             yAxes:[{
@@ -119,20 +122,7 @@ export class CalcComponent implements OnInit {
           }
         },
         annotation: { //plugin to draw vertical line https://github.com/chartjs/chartjs-plugin-annotation
-          annotations: [{
-            id: 'a-line-1', // optional
-            type: 'line',
-            mode: 'vertical',
-            scaleID: 'x-axis-0',
-            borderColor: 'hsl(145, 100%, 36%)',
-            borderWidth: 1,
-            borderDashOffset: 5,
-            label: {
-              position: "center",
-              enabled: true,
-              yAdjust: -7,
-            }
-          }]
+          annotations: [this.line]
         }
 	    }
 	  });
@@ -231,16 +221,17 @@ export class CalcComponent implements OnInit {
         dataset.data = array;
         
         //calculate Average
-        const average = (accumulator, currentValue) => (accumulator + currentValue);
-        this.val_average = array.reduce(average)/ array.length ;
-        this.chart.annotation.elements['a-line-1'].options.value = this.val_average;
-        this.chart.annotation.elements['a-line-1'].options.label.content = "среднеее: " + Math.floor(this.val_average) + " кг";
+        if (this.show_average) {
+          const average = (accumulator, currentValue) => (accumulator + currentValue);
+          this.val_average = array.reduce(average)/ array.length ;
+          this.chart.annotation.elements['a-line-1'].options.value = this.val_average;
+          this.chart.annotation.elements['a-line-1'].options.label.content = "среднее: " + Math.floor(this.val_average) + " кг";
+        }
     });
     this.chart.update();
   }
 
-  convert() {
-    
+  convert() {//convert to kilograms/pounds
     this.kg = !this.kg;
     if (this.kg) {
       this.button_text = "показать в фунтах";
@@ -249,5 +240,36 @@ export class CalcComponent implements OnInit {
       this.button_text = "показать в кг";
     }
     this.updateChart();
+  }
+
+  //checkbox show average
+  showAverage(show_average) {
+    this.show_average = show_average;
+    if (this.show_average) {
+      this.chart.options.annotation.annotations = [this.line];
+    }
+    else {
+      this.chart.options.annotation.annotations = [];
+    }
+    this.chart.update();//need update chart first when show average line
+    this.updateChart();
+  }
+
+  addVerticalLine() {
+    this.line = {
+      id: 'a-line-1', // optional
+      type: 'line',
+      mode: 'vertical',
+      scaleID: 'x-axis-0',
+      borderColor: 'hsla(145, 100%, 36%, 0.8)',
+      borderWidth: 1,
+      borderDashOffset: 5,
+      label: {
+        position: "center",
+        enabled: true,
+        yAdjust: -7,
+        backgroundColor: 'rgba(0,0,0,0.5)'
+      }
+    }
   }
 }

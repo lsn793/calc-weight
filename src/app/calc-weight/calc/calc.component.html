@@ -24,6 +24,11 @@
 	<div [hidden]="!chart">
 	  <canvas id="canvas" #canvas>{{ chart }}</canvas>
 	</div>
-	<br>
-	<button (click) ="convert()">{{button_text}}</button>
+	<div>
+		<label class="container_checkbox">Показать среднее значение 
+		  <input type="checkbox" #average (change)="showAverage(average.checked)">
+		  <span class="checkbox"></span>
+		</label>
+	</div>
+<!-- 	<button (click) ="convert()">{{button_text}}</button> -->
 </div>
