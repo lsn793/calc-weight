@@ -7,7 +7,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -17,7 +17,7 @@
 
 .control {
   display: inline-block;
-  min-width: 300px;
+  min-width: 270px;
   margin-top: 20px;
   margin-left: 3px;
   margin-right: 3px;
@@ -236,7 +236,6 @@ input[type=range]:focus::-ms-fill-upper {
 .container_checkbox {
     display: inline-block;
     position: relative;
-    margin-top: 16px;
     padding-left: 35px;
     padding-top: 3px;
     padding-bottom: 3px;

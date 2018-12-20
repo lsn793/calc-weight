@@ -17,6 +17,6 @@ export class AppComponent implements OnInit  {
     let found = path.lastIndexOf(search);
     this.calc_name = path.slice(found + search.length);
     this.router.navigate([this.calc_name]);*/
-  	this.router.navigate(["calc-weight"]);
+  	this.router.navigate(["calc-weight"], {skipLocationChange: true});
   }
 }
