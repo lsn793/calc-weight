@@ -34,3 +34,8 @@ npm install chart.js --save
 
 Uninstall moment.js - libriry which uses chartjs to display Date 
 npm uninstall moment
+
+added to packagejson 
+ "browser": {
+    "moment": false
+  }

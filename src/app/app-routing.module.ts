@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'calc-weight',
-    loadChildren: './calc-weight/calc-weight.module#CalcWeightModule'
+    loadChildren: () => import('./calc-weight/calc-weight.module').then(m => m.CalcWeightModule)
   },
   {
     path: '',
